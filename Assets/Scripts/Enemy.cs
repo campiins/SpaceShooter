@@ -16,9 +16,11 @@ public class Enemy : Spaceship
     }
     public void Init(Vector2 direction, ObjectPool<Enemy> pool)
     {
+        Health = _maxHealth;
         movementDirection = direction;
         _pool = pool;
         gameObject.SetActive(true);
+        _timer = _fireRate;
     }
 
 
@@ -47,9 +49,34 @@ public class Enemy : Spaceship
             _timer = 0;
         }
     }
+    public override void TakeDamage(int damage)
+    {
+        if (CanBeDamaged)
+        {
+            Health -= damage;
+            if (Health == 0)
+            {
+                Destroy();
+            }
+        }
+    }
 
     public override void Destroy()
     {
-        _pool.Release(this);
+        if (this.gameObject.activeSelf)
+            _pool.Release(this);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (player.CanBeDamaged)
+            {
+                player.Destroy();
+            }
+            Destroy();
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.Events;
 using UnityEngine.Pool;
 
 public class PlayerController : Spaceship
@@ -14,9 +15,13 @@ public class PlayerController : Spaceship
 
     [SerializeField] private Boundaries _bounds;
 
+    private HealthBar healthBar;
+    public UnityEvent OnPlayerDeath;
+
     protected override void Awake()
     {
         base.Awake();
+        healthBar = FindObjectOfType<HealthBar>();
         _timer = _fireRate;
     }
 
@@ -60,6 +65,25 @@ public class PlayerController : Spaceship
             SpawnProjectile(transform.right);
             _timer = 0;
         }
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        if (CanBeDamaged)
+        {
+            Health -= damage;
+            if (healthBar != null) healthBar.UpdateHealthBar();
+            if (Health == 0)
+            {
+                Destroy();
+            }
+        }
+    }
+
+    public override void Destroy()
+    {
+        OnPlayerDeath.Invoke();
+        base.Destroy();
     }
 }
 

@@ -47,6 +47,7 @@ public class Projectile : MonoBehaviour
 
     public void Destroy()
     {
-        _pool.Release(this);
+        if (this.gameObject.activeSelf)
+            _pool.Release(this);
     }
 }

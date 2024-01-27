@@ -80,11 +80,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Enemy
-  _health: 20
-  _speed: 2
+  _maxHealth: 20
+  _speed: 5
+  _canBeDamaged: 1
   _projectilePrefab: {fileID: 2477898557445588283, guid: 8776137c9b6a7c44682f94b029fe95f6, type: 3}
   _firePoints: {fileID: 8872245303271499003}
-  _fireRate: 1
+  _fireRate: 1.5
 --- !u!50 &1559327505507547178
 Rigidbody2D:
   serializedVersion: 4
