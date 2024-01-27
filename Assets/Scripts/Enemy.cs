@@ -1,16 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Enemy : Spaceship
 {
     [SerializeField] private float _fireRate;
     private float _timer;
 
+    [NonSerialized] public Vector2 movementDirection;
+    private ObjectPool<Enemy> _pool;
+
     protected override void Awake()
     {
         base.Awake();
     }
+    public void Init(Vector2 direction, ObjectPool<Enemy> pool)
+    {
+        movementDirection = direction;
+        _pool = pool;
+        gameObject.SetActive(true);
+    }
+
 
     private void Update()
     {
@@ -25,7 +35,7 @@ public class Enemy : Spaceship
     protected override void Movement()
     {
         // Mover nave
-        _rigidbody.velocity = transform.right * Speed;
+        _rigidbody.velocity = movementDirection * Speed;
     }
 
     protected override void Fire()
@@ -36,5 +46,10 @@ public class Enemy : Spaceship
             SpawnProjectile(transform.right);
             _timer = 0;
         }
+    }
+
+    public override void Destroy()
+    {
+        _pool.Release(this);
     }
 }

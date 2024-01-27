@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour
         Destroy();
     }
 
-    private void Destroy()
+    public void Destroy()
     {
         _pool.Release(this);
     }

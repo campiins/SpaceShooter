@@ -11,7 +11,8 @@ public abstract class Spaceship : MonoBehaviour
     [SerializeField] private int _health;
     [SerializeField] private float _speed;
 
-    [Header("Proectile Settings")]
+    [Header("Projectile Settings")]
+
     [SerializeField] private Projectile _projectilePrefab;
     [SerializeField] private GameObject _firePoints;
 
@@ -65,20 +66,15 @@ public abstract class Spaceship : MonoBehaviour
         }
     }
 
-    protected void SpawnProjectile(Vector3 directionNormalized)
+    protected void SpawnProjectile(Vector3 movementDirection)
     {
         foreach (Transform firePointTransform in _firePointsList)
         {
             Vector3 spawnPosition = firePointTransform.position;
             Projectile projectile = _pool.Get();
             projectile.transform.position = spawnPosition;
-            projectile.Init(directionNormalized, _pool);
+            projectile.Init(movementDirection, _pool);
         }
-    }
-
-    private void OnReturnedToPool(Projectile projectile)
-    {
-        projectile.gameObject.SetActive(false);
     }
 
     private Projectile CreateProjectile()
@@ -87,7 +83,12 @@ public abstract class Spaceship : MonoBehaviour
         return projectile;
     }
 
-    protected virtual void Destroy()
+    private void OnReturnedToPool(Projectile projectile)
+    {
+        projectile.gameObject.SetActive(false);
+    }
+
+    public virtual void Destroy()
     {
         Destroy(this.gameObject);
     }
