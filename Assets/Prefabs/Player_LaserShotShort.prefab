@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7575184351232358798}
   m_Layer: 8
   m_Name: Player_LaserShotShort
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 20
-  _damage: 5
+  _damage: 10
   _lifetime: 2
 --- !u!58 &7113210333727434905
 CircleCollider2D:

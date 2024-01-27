@@ -8,17 +8,20 @@ public abstract class Spaceship : MonoBehaviour
     [Header("General Settings")]
 
     [SerializeField] private string _name;
-    [SerializeField] private int _health;
+    [SerializeField] protected int _maxHealth;
+    private int _health;
     [SerializeField] private float _speed;
+    [SerializeField] private bool _canBeDamaged = true;
 
-    [Header("Proectile Settings")]
+    [Header("Projectile Settings")]
+
     [SerializeField] private Projectile _projectilePrefab;
     [SerializeField] private GameObject _firePoints;
 
     private List<Transform> _firePointsList = new List<Transform>();
     private ObjectPool<Projectile> _pool;
 
-    public string Name
+    protected string Name
     {
         get { return _name; }
         set { _name = value; }
@@ -30,10 +33,16 @@ public abstract class Spaceship : MonoBehaviour
         set { _health = value < 0 ? 0 : value; }
     }
 
-    public float Speed
+    protected float Speed
     {
         get { return _speed; }
         set { _speed = value; }
+    }
+
+    public bool CanBeDamaged
+    {
+        get { return _canBeDamaged; }
+        set { _canBeDamaged = value; }
     }
 
     protected Rigidbody2D _rigidbody;
@@ -43,6 +52,8 @@ public abstract class Spaceship : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
+
+        Health = _maxHealth;
 
         _pool = new ObjectPool<Projectile>(CreateProjectile, null, OnReturnedToPool, defaultCapacity: 20);
         foreach (Transform childTransform in _firePoints.GetComponentsInChildren<Transform>())
@@ -58,27 +69,25 @@ public abstract class Spaceship : MonoBehaviour
 
     public virtual void TakeDamage(int damage)
     {
-        Health -= damage;
-        if (Health == 0)
+        if (CanBeDamaged)
         {
-            Destroy();
+            Health -= damage;
+            if (Health == 0)
+            {
+                Destroy();
+            }
         }
     }
 
-    protected void SpawnProjectile(Vector3 directionNormalized)
+    protected void SpawnProjectile(Vector3 movementDirection)
     {
         foreach (Transform firePointTransform in _firePointsList)
         {
             Vector3 spawnPosition = firePointTransform.position;
             Projectile projectile = _pool.Get();
             projectile.transform.position = spawnPosition;
-            projectile.Init(directionNormalized, _pool);
+            projectile.Init(movementDirection, _pool);
         }
-    }
-
-    private void OnReturnedToPool(Projectile projectile)
-    {
-        projectile.gameObject.SetActive(false);
     }
 
     private Projectile CreateProjectile()
@@ -87,8 +96,14 @@ public abstract class Spaceship : MonoBehaviour
         return projectile;
     }
 
-    protected virtual void Destroy()
+    private void OnReturnedToPool(Projectile projectile)
     {
-        Destroy(this.gameObject);
+        projectile.gameObject.SetActive(false);
+    }
+
+    public virtual void Destroy()
+    {
+        if (this.gameObject.activeSelf)
+            Destroy(this.gameObject);
     }
 }
