@@ -8,7 +8,7 @@ public class Enemy : Spaceship
     private float _timer;
 
     [NonSerialized] public Vector2 movementDirection;
-    private ObjectPool<Enemy> _pool;
+    private ObjectPool<Enemy> _enemyPool;
 
     protected override void Awake()
     {
@@ -18,7 +18,7 @@ public class Enemy : Spaceship
     {
         Health = _maxHealth;
         movementDirection = direction;
-        _pool = pool;
+        _enemyPool = pool;
         gameObject.SetActive(true);
         _timer = _fireRate;
     }
@@ -64,7 +64,7 @@ public class Enemy : Spaceship
     public override void Destroy()
     {
         if (this.gameObject.activeSelf)
-            _pool.Release(this);
+            _enemyPool.Release(this);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

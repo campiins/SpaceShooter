@@ -79,8 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e01d5368c2d984bb09a4ec17eb0d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Enemy
-  _maxHealth: 20
+  _name: Default Enemy
+  _maxHealth: 10
   _speed: 5
   _canBeDamaged: 1
   _projectilePrefab: {fileID: 2477898557445588283, guid: 8776137c9b6a7c44682f94b029fe95f6, type: 3}

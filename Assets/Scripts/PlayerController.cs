@@ -1,14 +1,20 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.Events;
-using UnityEngine.Pool;
+
+public enum SpecialAbility
+{
+    none,
+    multipleProjectiles,
+    shield
+}
 
 public class PlayerController : Spaceship
 {
     [SerializeField] private float _fireRate;
+    public SpecialAbility currentSpecialAbility = SpecialAbility.none;
+    private int _projectilesAmount = 10;
+    private float _startAngle = 180f, _endAngle = 0f;
     private float _timer;
 
     [Header("Movement Boundaries")]
@@ -28,6 +34,11 @@ public class PlayerController : Spaceship
     private void Update()
     {
         Fire();
+
+        if (Input.GetKeyDown(KeyCode.F) && currentSpecialAbility == SpecialAbility.multipleProjectiles)
+        {
+            FireMultipleProjectiles();
+        }
     }
 
     private void FixedUpdate()
@@ -65,6 +76,30 @@ public class PlayerController : Spaceship
             SpawnProjectile(transform.right);
             _timer = 0;
         }
+    }
+
+    private void FireMultipleProjectiles()
+    {
+        float angleStep = (_endAngle - _startAngle) / _projectilesAmount;
+        float angle = _startAngle;
+
+        for (int i = 0; i <= _projectilesAmount; i++)
+        {
+            float projDirX = transform.position.x + Mathf.Sin((angle * Mathf.PI) / 180f);
+            float projDirY = transform.position.y + Mathf.Cos((angle * Mathf.PI) / 180f);
+
+            Vector3 projMoveVector = new Vector3(projDirX, projDirY, 0f);
+            Vector2 projDirection = (projMoveVector - transform.position).normalized;
+
+            Projectile projectile = CreateProjectile();
+            projectile.transform.position = transform.position;
+            projectile.transform.rotation = transform.rotation;
+            projectile.Init(projDirection, _projectilePool);
+
+            angle += angleStep;
+        }
+
+        currentSpecialAbility = SpecialAbility.none;
     }
 
     public override void TakeDamage(int damage)

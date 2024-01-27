@@ -11,12 +11,9 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private Enemy _enemyPrefab;
 
-    [SerializeField] private int _numberOfEnemiesInWave = 10;
     [SerializeField] private int _numberOfWavesInLevel = 3;
-    [SerializeField] private int _numberOfLevels = 5;
-
-    [SerializeField] private float _timeBetweenEnemies = 1f; // in seconds
     [SerializeField] private float _timeBetweenWaves = 3f; // in seconds
+    [SerializeField] private int _numberOfLevels = 5;
     [SerializeField] private float _timeBetweenLevels = 5f; // in seconds
 
     [NonSerialized] public Vector2 movementDirection;
@@ -54,14 +51,15 @@ public class Spawner : MonoBehaviour
         {
             for (int wave = 1; wave <= _numberOfWavesInLevel; wave++)
             {
-                wavesText.text = $"Level {level} - Wave {wave}";
-                yield return new WaitForSeconds(2f);
+                GameManager.Instance.currentLevel = level;
+                wavesText.text = $"Level {GameManager.Instance.currentLevel} - Wave {wave}";
+                yield return new WaitForSeconds(3f);
                 wavesText.text = "";
 
-                for (int enemy = 1; enemy <= _numberOfEnemiesInWave; enemy++)
+                for (int enemy = 1; enemy <= GameManager.Instance.numberOfEnemiesInWave; enemy++)
                 {
                     SpawnEnemy(Vector2.left);
-                    yield return new WaitForSeconds(_timeBetweenEnemies);
+                    yield return new WaitForSeconds(GameManager.Instance.timeBetweenEnemies);
                 }
                 yield return new WaitForSeconds(_timeBetweenWaves);
             }

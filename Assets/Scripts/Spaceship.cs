@@ -19,7 +19,7 @@ public abstract class Spaceship : MonoBehaviour
     [SerializeField] private GameObject _firePoints;
 
     private List<Transform> _firePointsList = new List<Transform>();
-    private ObjectPool<Projectile> _pool;
+    protected ObjectPool<Projectile> _projectilePool;
 
     protected string Name
     {
@@ -55,7 +55,7 @@ public abstract class Spaceship : MonoBehaviour
 
         Health = _maxHealth;
 
-        _pool = new ObjectPool<Projectile>(CreateProjectile, null, OnReturnedToPool, defaultCapacity: 20);
+        _projectilePool = new ObjectPool<Projectile>(CreateProjectile, null, OnReturnedToPool, defaultCapacity: 20);
         foreach (Transform childTransform in _firePoints.GetComponentsInChildren<Transform>())
         {
             if (childTransform != _firePoints.transform)
@@ -84,13 +84,13 @@ public abstract class Spaceship : MonoBehaviour
         foreach (Transform firePointTransform in _firePointsList)
         {
             Vector3 spawnPosition = firePointTransform.position;
-            Projectile projectile = _pool.Get();
+            Projectile projectile = _projectilePool.Get();
             projectile.transform.position = spawnPosition;
-            projectile.Init(movementDirection, _pool);
+            projectile.Init(movementDirection, _projectilePool);
         }
     }
 
-    private Projectile CreateProjectile()
+    protected Projectile CreateProjectile()
     {
         Projectile projectile = Instantiate(_projectilePrefab);
         return projectile;
