@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public enum SpecialAbility
 {
     none,
-    multipleProjectiles,
+    multiShot,
     shield
 }
 
@@ -13,8 +13,8 @@ public class PlayerController : Spaceship
 {
     [SerializeField] private float _fireRate;
     public SpecialAbility currentSpecialAbility = SpecialAbility.none;
-    private int _projectilesAmount = 10;
-    private float _startAngle = 180f, _endAngle = 0f;
+    private int _projectilesAmount = 20;
+    private float _startAngle = 0f, _endAngle = 360f;
     private float _timer;
 
     [Header("Movement Boundaries")]
@@ -35,9 +35,12 @@ public class PlayerController : Spaceship
     {
         Fire();
 
-        if (Input.GetKeyDown(KeyCode.F) && currentSpecialAbility == SpecialAbility.multipleProjectiles)
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            FireMultipleProjectiles();
+            if (currentSpecialAbility == SpecialAbility.multiShot)
+            {
+                MultiShot();
+            }
         }
     }
 
@@ -78,7 +81,7 @@ public class PlayerController : Spaceship
         }
     }
 
-    private void FireMultipleProjectiles()
+    private void MultiShot()
     {
         float angleStep = (_endAngle - _startAngle) / _projectilesAmount;
         float angle = _startAngle;
@@ -98,6 +101,14 @@ public class PlayerController : Spaceship
 
             angle += angleStep;
         }
+
+        currentSpecialAbility = SpecialAbility.none;
+    }
+
+    public void RestoreHealth()
+    {
+        Health = _maxHealth;
+        if (healthBar != null) healthBar.UpdateHealthBar();
 
         currentSpecialAbility = SpecialAbility.none;
     }

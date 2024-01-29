@@ -26,16 +26,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentLevel == 2)
-        {
-            Time.timeScale = 0.0f;
-            menuManager.ShowShop();
-        }
+
     }
 
     public void AddMultipleProjectileAbility()
     {
-        FindObjectOfType<PlayerController>().currentSpecialAbility = SpecialAbility.multipleProjectiles;
+        FindObjectOfType<PlayerController>().currentSpecialAbility = SpecialAbility.multiShot;
         menuManager.HideShop();
     }
     public void AddShieldAbility()

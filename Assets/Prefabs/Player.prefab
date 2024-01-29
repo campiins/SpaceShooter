@@ -48,15 +48,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b42c7c9101501147bc699efd6a4df4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Campinescu
-  _health: 100
+  _name: Player
+  _maxHealth: 100
   _speed: 10
+  _canBeDamaged: 1
   _projectilePrefab: {fileID: 2477898557445588283, guid: 92ad890a573307047b48559649a7ff07, type: 3}
   _firePoints: {fileID: 2475830628205080240}
   _fireRate: 0.5
+  currentSpecialAbility: 0
   _bounds:
     min: {x: -8.4, y: -4.5}
     max: {x: 8.4, y: 4.5}
+  OnPlayerDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &6058855255415378102
 Rigidbody2D:
   serializedVersion: 4

@@ -30,6 +30,7 @@ public class MenuManager : MonoBehaviour
 
     public void ShowShop()
     {
+        Time.timeScale = 0.0f;
         shopObj.SetActive(true);
     }
 

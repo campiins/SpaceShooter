@@ -49,6 +49,11 @@ public class Spawner : MonoBehaviour
     {
         for (int level = 1; level <= _numberOfLevels; level++)
         {
+            if (level > 1)
+            {
+                FindObjectOfType<MenuManager>().ShowShop();
+            }
+
             for (int wave = 1; wave <= _numberOfWavesInLevel; wave++)
             {
                 GameManager.Instance.currentLevel = level;
