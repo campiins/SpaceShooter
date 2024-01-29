@@ -78,5 +78,9 @@ public class Enemy : Spaceship
             }
             Destroy();
         }
+        else if (other.gameObject.CompareTag("Shield"))
+        {
+            Destroy();
+        }
     }
 }
