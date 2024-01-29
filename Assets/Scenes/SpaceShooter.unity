@@ -5218,6 +5218,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3531976792458375375, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3531976792458375375, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
+      propertyPath: m_TagString
+      value: Shield
+      objectReference: {fileID: 0}
     - target: {fileID: 4210595253105075288, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
       propertyPath: m_Color.a
       value: 0.2
