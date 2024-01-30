@@ -39,8 +39,16 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Spaceship spaceship = other.GetComponent<Spaceship>();
-        if (spaceship != null) spaceship.TakeDamage(_damage);
+        if (this.CompareTag("PlayerProjectile") && other.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (enemy != null) enemy.TakeDamage(_damage);
+        }
+        else if (this.CompareTag("EnemyProjectile") && other.CompareTag("Player"))
+        {
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (player != null) player.TakeDamage(_damage);
+        }
 
         Destroy();
     }
