@@ -80,12 +80,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Default Enemy
-  _maxHealth: 10
+  maxHealth: 10
   _speed: 5
   _canBeDamaged: 1
   _projectilePrefab: {fileID: 2477898557445588283, guid: 8776137c9b6a7c44682f94b029fe95f6, type: 3}
   _firePoints: {fileID: 8872245303271499003}
   _fireRate: 1.5
+  coinReward: 20
+  popupTextPrefab: {fileID: 6627471991438112843, guid: 5719d9412b60d1948814a52880b14cfc, type: 3}
+  popupText: {fileID: 2290249251290553403, guid: 5719d9412b60d1948814a52880b14cfc, type: 3}
 --- !u!50 &1559327505507547178
 Rigidbody2D:
   serializedVersion: 4
@@ -146,7 +149,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.67, y: 1.5}
+  m_Size: {x: 1.1, y: 1}
   m_Direction: 1
 --- !u!1 &7649744282202695714
 GameObject:

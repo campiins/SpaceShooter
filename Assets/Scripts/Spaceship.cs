@@ -8,7 +8,7 @@ public abstract class Spaceship : MonoBehaviour
     [Header("General Settings")]
 
     [SerializeField] private string _name;
-    [SerializeField] protected int _maxHealth;
+    public int maxHealth;
     private int _health;
     [SerializeField] private float _speed;
     [SerializeField] private bool _canBeDamaged = true;
@@ -19,7 +19,7 @@ public abstract class Spaceship : MonoBehaviour
     [SerializeField] private GameObject _firePoints;
 
     private List<Transform> _firePointsList = new List<Transform>();
-    protected ObjectPool<Projectile> _projectilePool;
+    public ObjectPool<Projectile> _projectilePool;
 
     protected string Name
     {
@@ -53,7 +53,7 @@ public abstract class Spaceship : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
 
-        Health = _maxHealth;
+        Health = maxHealth;
 
         _projectilePool = new ObjectPool<Projectile>(CreateProjectile, null, OnReturnedToPool, defaultCapacity: 20);
         foreach (Transform childTransform in _firePoints.GetComponentsInChildren<Transform>())
@@ -90,7 +90,7 @@ public abstract class Spaceship : MonoBehaviour
         }
     }
 
-    protected Projectile CreateProjectile()
+    public Projectile CreateProjectile()
     {
         Projectile projectile = Instantiate(_projectilePrefab);
         return projectile;

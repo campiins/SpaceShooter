@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -6,6 +7,12 @@ public class Enemy : Spaceship
 {
     [SerializeField] private float _fireRate;
     private float _timer;
+
+    [Header("Reward Popup")]
+
+    [SerializeField] private int coinReward = 10;
+    [SerializeField] private GameObject popupTextPrefab;
+    [SerializeField] private TMP_Text popupText;
 
     [NonSerialized] public Vector2 movementDirection;
     private ObjectPool<Enemy> _enemyPool;
@@ -16,7 +23,8 @@ public class Enemy : Spaceship
     }
     public void Init(Vector2 direction, ObjectPool<Enemy> pool)
     {
-        Health = _maxHealth;
+        //IsDestroyed = false;
+        Health = maxHealth;
         movementDirection = direction;
         _enemyPool = pool;
         gameObject.SetActive(true);
@@ -38,6 +46,10 @@ public class Enemy : Spaceship
     {
         // Mover nave
         _rigidbody.velocity = movementDirection * Speed;
+        if (transform.position.x < -10) // Si sale del límite izquierdo
+        {
+            _enemyPool.Release(this);
+        }
     }
 
     protected override void Fire()
@@ -61,10 +73,20 @@ public class Enemy : Spaceship
         }
     }
 
+    private void ShowPopup()
+    {
+        popupText.text = coinReward.ToString() + " $";
+        Instantiate(popupTextPrefab, transform.position, Quaternion.identity);
+        GameManager.Instance.AddCoins(coinReward);
+    }
+
     public override void Destroy()
     {
         if (this.gameObject.activeSelf)
+        {
+            ShowPopup();
             _enemyPool.Release(this);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -76,11 +98,11 @@ public class Enemy : Spaceship
             {
                 player.Destroy();
             }
-            Destroy();
+            _enemyPool.Release(this);
         }
         else if (other.gameObject.CompareTag("Shield"))
         {
-            Destroy();
+            _enemyPool.Release(this);
         }
     }
 }

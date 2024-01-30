@@ -11,11 +11,6 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private Enemy _enemyPrefab;
 
-    [SerializeField] private int _numberOfWavesInLevel = 3;
-    [SerializeField] private float _timeBetweenWaves = 3f; // in seconds
-    [SerializeField] private int _numberOfLevels = 5;
-    [SerializeField] private float _timeBetweenLevels = 5f; // in seconds
-
     [NonSerialized] public Vector2 movementDirection;
 
     [Header("Spawn Boundaries")]
@@ -47,14 +42,14 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-        for (int level = 1; level <= _numberOfLevels; level++)
+        for (int level = 1; level <= GameManager.Instance.numberOfLevels; level++)
         {
             if (level > 1)
             {
                 FindObjectOfType<MenuManager>().ShowShop();
             }
 
-            for (int wave = 1; wave <= _numberOfWavesInLevel; wave++)
+            for (int wave = 1; wave <= GameManager.Instance.numberOfWavesInLevel; wave++)
             {
                 GameManager.Instance.currentLevel = level;
                 wavesText.text = $"Level {GameManager.Instance.currentLevel} - Wave {wave}";
@@ -66,9 +61,9 @@ public class Spawner : MonoBehaviour
                     SpawnEnemy(Vector2.left);
                     yield return new WaitForSeconds(GameManager.Instance.timeBetweenEnemies);
                 }
-                yield return new WaitForSeconds(_timeBetweenWaves);
+                yield return new WaitForSeconds(GameManager.Instance.timeBetweenWaves);
             }
-            yield return new WaitForSeconds(_timeBetweenLevels);
+            yield return new WaitForSeconds(GameManager.Instance.timeBetweenLevels);
         }
     }
 

@@ -6,11 +6,23 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public int currentLevel;
+    [HideInInspector] public int currentLevel = 0;
+    [HideInInspector] public int currentCoins = 0;
+
+    [Header("Enemy Spawner Settings")]
+
     public int numberOfEnemiesInWave = 10;
     public float timeBetweenEnemies = 1f; // in seconds
+    public int numberOfWavesInLevel = 3;
+    public float timeBetweenWaves = 3f; // in seconds
+    public int numberOfLevels = 5;
+    public float timeBetweenLevels = 5f; // in seconds
+
+    [Header("Object References")]
 
     [SerializeField] private MenuManager menuManager;
+    [SerializeField] private Shop shop;
+
 
     private void Awake()
     {
@@ -26,22 +38,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            AddCoins(1000);
+        }
     }
 
-    public void AddMultipleProjectileAbility()
+    public void AddCoins(int coins)
     {
-        FindObjectOfType<PlayerController>().currentSpecialAbility = SpecialAbility.multiShot;
-        menuManager.HideShop();
-    }
-    public void AddShieldAbility()
-    {
-        FindObjectOfType<PlayerController>().currentSpecialAbility = SpecialAbility.shield;
-        menuManager.HideShop();
-    }
-
-    public void RemovePlayerAbility()
-    {
-        FindObjectOfType<PlayerController>().currentSpecialAbility = SpecialAbility.none;
+        currentCoins += coins;
+        menuManager.UpdateCoinsText();
+        shop.UpdateCoinsText();
     }
 }

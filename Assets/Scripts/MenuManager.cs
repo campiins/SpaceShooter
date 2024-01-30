@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverObj;
     [SerializeField] private GameObject shopObj;
+    [SerializeField] private TMP_Text currentCoinsTxt;
 
     private void Awake()
     {
@@ -38,5 +40,10 @@ public class MenuManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         shopObj.SetActive(false);
+    }
+
+    public void UpdateCoinsText()
+    {
+        currentCoinsTxt.text = GameManager.Instance.currentCoins.ToString() + " $";
     }
 }
