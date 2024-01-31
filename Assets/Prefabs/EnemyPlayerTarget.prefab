@@ -40,11 +40,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1592597309370765203}
-  - component: {fileID: 5358947796750238757}
+  - component: {fileID: 2507248306862201999}
   - component: {fileID: 1559327505507547178}
   - component: {fileID: 8850142320369151711}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: EnemyPlayerTarget
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 6035034927156770275}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalPosition: {x: 10, y: 2.5395734, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -67,7 +67,7 @@ Transform:
   - {fileID: 884708990478411376}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &5358947796750238757
+--- !u!114 &2507248306862201999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,16 +76,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6035034927156770275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17e01d5368c2d984bb09a4ec17eb0d3b, type: 3}
+  m_Script: {fileID: 11500000, guid: a682bebf98f33a240b1aec1ea4025922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Default Enemy
+  _name: Enemy Player Target
   maxHealth: 10
-  _speed: 5
-  _projectilePrefab: {fileID: 2477898557445588283, guid: 8776137c9b6a7c44682f94b029fe95f6, type: 3}
+  _speed: 4
+  _projectilePrefab: {fileID: 2477898557445588283, guid: 90462259867745f43a800abc0ba67716, type: 3}
   _firePoints: {fileID: 8872245303271499003}
-  _fireRate: 1.5
-  coinReward: 20
+  _fireRate: 2
+  coinReward: 40
   popupTextPrefab: {fileID: 6627471991438112843, guid: 5719d9412b60d1948814a52880b14cfc, type: 3}
   popupText: {fileID: 2290249251290553403, guid: 5719d9412b60d1948814a52880b14cfc, type: 3}
   _animator: {fileID: 8020848485756905045}

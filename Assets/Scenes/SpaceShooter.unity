@@ -2469,7 +2469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 0
   currentCoins: 0
-  numberOfEnemiesInWave: 10
+  numberOfEnemiesInWave: 1
   timeBetweenEnemies: 1.2
   numberOfWavesInLevel: 3
   timeBetweenWaves: 2
@@ -3422,7 +3422,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b708c48b7229e44c8b0fa09ddac5222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 5358947796750238757, guid: e26d9469cfc70c247a23d553b4abac2b, type: 3}
+  _enemyPrefabs:
+  - {fileID: 5358947796750238757, guid: e26d9469cfc70c247a23d553b4abac2b, type: 3}
+  - {fileID: 2507248306862201999, guid: fd09220596b9e6245882a1f99b9f0694, type: 3}
   _bounds:
     min: {x: 0, y: -4.5}
     max: {x: 0, y: 4.5}

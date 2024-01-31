@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     private List<Transform> _firePointsList = new List<Transform>();
     private ObjectPool<Projectile> _projectilePool;
-    private float _timer;
+    protected float _timer;
 
     [Header("Reward Popup")]
 
@@ -30,11 +30,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected GameObject popupTextPrefab;
     [SerializeField] protected TMP_Text popupText;
 
-    [NonSerialized] public Vector2 movementDirection;
-    private ObjectPool<Enemy> _enemyPool;
+    private Vector2 _movementDirection;
+    public ObjectPool<Enemy> _enemyPool;
 
     private Rigidbody2D _rigidbody;
-    private Animator _animator;
+    [SerializeField] private Animator _animator;
 
     public int Health
     {
@@ -42,10 +42,9 @@ public class Enemy : MonoBehaviour
         set { _health = value < 0 ? 0 : value; }
     }
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _animator = GetComponentInChildren<Animator>();
 
         Health = maxHealth;
 
@@ -59,7 +58,7 @@ public class Enemy : MonoBehaviour
     public void Init(Vector2 direction, ObjectPool<Enemy> pool)
     {
         Health = maxHealth;
-        movementDirection = direction;
+        _movementDirection = direction;
         _enemyPool = pool;
         gameObject.SetActive(true);
         _timer = _fireRate;
@@ -81,7 +80,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Movement()
     {
         // Mover nave
-        _rigidbody.velocity = movementDirection * _speed;
+        _rigidbody.velocity = _movementDirection * _speed;
 
         if (transform.position.x < -10) // Si sale del límite izquierdo
         {
@@ -94,10 +93,11 @@ public class Enemy : MonoBehaviour
         _timer += Time.deltaTime;
         if (Health > 0 && _timer > _fireRate)
         {
-            SpawnProjectile(transform.right);
+            SpawnProjectile(transform.right.normalized);
             _timer = 0;
         }
     }
+
     public void TakeDamage(int damage)
     {
         Health -= damage;
@@ -110,11 +110,12 @@ public class Enemy : MonoBehaviour
     private void ShowPopup()
     {
         popupText.text = coinReward.ToString() + " $";
-        Instantiate(popupTextPrefab, transform.position, Quaternion.identity);
+        popupTextPrefab.SetActive(false);
+        Instantiate(popupTextPrefab, transform.position, Quaternion.identity).SetActive(true);
         GameManager.Instance.AddCoins(coinReward);
     }
 
-    private void SpawnProjectile(Vector3 movementDirection)
+    protected void SpawnProjectile(Vector3 movementDirection)
     {
         foreach (Transform firePointTransform in _firePointsList)
         {
@@ -140,6 +141,7 @@ public class Enemy : MonoBehaviour
     {
         if (this.gameObject.activeSelf)
         {
+            _animator.SetBool("isMoving", false);
             ShowPopup();
             _enemyPool.Release(this);
         }

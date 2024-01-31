@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -9,7 +10,7 @@ public class Spawner : MonoBehaviour
 {
     [Header("General Settings")]
 
-    [SerializeField] private Enemy _enemyPrefab;
+    [SerializeField] private List<Enemy> _enemyPrefabs = new List<Enemy>();
 
     [NonSerialized] public Vector2 movementDirection;
 
@@ -58,7 +59,7 @@ public class Spawner : MonoBehaviour
 
                 for (int enemy = 1; enemy <= GameManager.Instance.numberOfEnemiesInWave; enemy++)
                 {
-                    SpawnEnemy(Vector2.left);
+                    SpawnEnemy(Vector2.left.normalized);
                     yield return new WaitForSeconds(GameManager.Instance.timeBetweenEnemies);
                 }
                 yield return new WaitForSeconds(GameManager.Instance.timeBetweenWaves);
@@ -69,7 +70,7 @@ public class Spawner : MonoBehaviour
 
     private void SpawnEnemy(Vector3 movementDirection)
     {
-        Vector3 spawnPosition = new Vector3(transform.position.x, Random.Range(_bounds.min.y, _bounds.max.y), transform.position.z);
+        Vector3 spawnPosition = new (transform.position.x, Random.Range(_bounds.min.y, _bounds.max.y), transform.position.z);
         Enemy enemy = _pool.Get();
         enemy.transform.position = spawnPosition;
         enemy.Init(movementDirection, _pool);
@@ -77,7 +78,9 @@ public class Spawner : MonoBehaviour
 
     private Enemy CreateEnemy()
     {
-        Enemy enemy = Instantiate(_enemyPrefab);
+        int i = Random.Range(0, _enemyPrefabs.Count);
+        Enemy enemy = _enemyPrefabs[i];
+        Instantiate(enemy);
         return enemy;
     }
 
