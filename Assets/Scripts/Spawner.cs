@@ -11,7 +11,6 @@ public class Spawner : MonoBehaviour
     [Header("General Settings")]
 
     [SerializeField] private List<Enemy> _enemyPrefabs = new List<Enemy>();
-    //[SerializeField] private Enemy _enemyPrefab;
 
     [NonSerialized] public Vector2 movementDirection;
 
@@ -24,7 +23,6 @@ public class Spawner : MonoBehaviour
     [SerializeField] private TMP_Text wavesText;
 
     private ObjectPool<Enemy> _pool;
-
 
     private void Awake()
     {

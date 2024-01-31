@@ -10,19 +10,31 @@ public class MenuManager : MonoBehaviour
 
     [Header("InGame UI")]
 
-    [SerializeField] private TMP_Text currentScoreTxt;
-    [SerializeField] private TMP_Text currentCoinsTxt;
+    [SerializeField] private TMP_Text _currentScoreTxt;
+    [SerializeField] private TMP_Text _currentMoneyTxt;
+
+    [Header("Pause Menu")]
+
+    [SerializeField] private GameObject _pauseMenuObj;
 
     [Header("Shop")]
 
-    [SerializeField] private GameObject shopObj;
+    [SerializeField] private GameObject _shopObj;
+    private AbilityHolder _abilityHolder;
 
     [Header("Game Over")]
 
-    [SerializeField] private GameObject gameOverObj;
-    [SerializeField] private TMP_Text finalScoreGOText;
-    [SerializeField] private TMP_Text levelGOText;
-    [SerializeField] private TMP_Text totalKillsGOText;
+    [SerializeField] private GameObject _gameOverObj;
+    [SerializeField] private TMP_Text _finalScoreGOText;
+    [SerializeField] private TMP_Text _levelGOText;
+    [SerializeField] private TMP_Text _totalKillsGOText;
+
+    [Header("Win")]
+    [SerializeField] private GameObject _winPanelObj;
+    [SerializeField] private TMP_Text _finalScoreWText;
+    [SerializeField] private TMP_Text _levelWText;
+    [SerializeField] private TMP_Text _totalKillsWText;
+
 
     private void Awake()
     {
@@ -35,14 +47,17 @@ public class MenuManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        FindObjectOfType<PlayerController>().OnPlayerDeath.AddListener(HandlePlayerDeath);
+        PlayerController _player = FindObjectOfType<PlayerController>();
+        _player?.OnPlayerDeath.AddListener(HandlePlayerDeath);
+        _abilityHolder = _player.gameObject.GetComponent<AbilityHolder>();
+
     }
 
     private void Start()
     {
         // Inicializar texto de puntuación y monedas
-        currentScoreTxt.text = "Score " + GameManager.Instance.currentScore.ToString();
-        currentCoinsTxt.text = GameManager.Instance.currentCoins.ToString() + " $";
+        _currentScoreTxt.text = "Score " + GameManager.Instance.currentScore.ToString();
+        _currentMoneyTxt.text = GameManager.Instance.currentMoney.ToString() + " $";
     }
 
     private void HandlePlayerDeath()
@@ -50,38 +65,95 @@ public class MenuManager : MonoBehaviour
         Invoke("ShowGameOver", 2);
     }
 
+    public void ShowPauseMenu()
+    {
+        Time.timeScale = 0.0f;
+        _pauseMenuObj.SetActive(true);
+    }
+
+    public void HidePauseMenu()
+    {
+        _pauseMenuObj.SetActive(false);
+        Time.timeScale = 1.0f;
+    }
+
     public void ShowGameOver()
     {
-        finalScoreGOText.text = GameManager.Instance.currentScore.ToString();
-        levelGOText.text = GameManager.Instance.currentLevel.ToString();
-        totalKillsGOText.text = GameManager.Instance.enemyKills.ToString();
-        gameOverObj.SetActive(true);
+        _finalScoreGOText.text = GameManager.Instance.currentScore.ToString();
+        _levelGOText.text = GameManager.Instance.currentLevel.ToString();
+        _totalKillsGOText.text = GameManager.Instance.enemyKills.ToString();
+
+        GameManager.Instance.isGameOver = true;
+
+        _gameOverObj.SetActive(true);
     }
 
     public void HideGameOver()
     {
-        gameOverObj.SetActive(false);
+        _gameOverObj.SetActive(false);
+    }
+
+    public void ShowWinPanel()
+    {
+        _finalScoreWText.text = GameManager.Instance.currentScore.ToString();
+        _levelWText.text = GameManager.Instance.currentLevel.ToString();
+        _totalKillsWText.text = GameManager.Instance.enemyKills.ToString();
+
+        _gameOverObj.SetActive(true);
+    }
+    public void HideWinPanel()
+    {
+        _gameOverObj.SetActive(false);
     }
 
     public void ShowShop()
     {
-        Time.timeScale = 0.0f;
-        shopObj.SetActive(true);
+        bool canShowShop = false;
+
+        // Si el jugador tiene menos de 2 habilidades, se muestra la tienda
+        if (_abilityHolder.abilities.Count < 2)
+        {
+            canShowShop = true;
+        }
+        else // Si el jugador tiene al menos 2 habilidades
+        {
+            // Si alguna de las habilidades del jugador no está a nivel máximo, se muestra la tienda
+            foreach (SpecialAbility ability in _abilityHolder.abilities)
+            {
+                if (ability.currentLevel < ability.GetMaxLevel())
+                {
+                    canShowShop = true;
+                    break;
+                }
+            }
+        }
+
+        if (canShowShop)
+        {
+            Time.timeScale = 0.0f;
+            _shopObj.SetActive(true);
+        }
     }
 
     public void HideShop()
     {
         Time.timeScale = 1.0f;
-        shopObj.SetActive(false);
+        _shopObj.SetActive(false);
     }
 
     public void UpdateScoreText()
     {
-        currentScoreTxt.text = "Score " + GameManager.Instance.currentScore.ToString();
+        _currentScoreTxt.text = "Score " + GameManager.Instance.currentScore.ToString();
     }
 
-    public void UpdateCoinsText()
+    public void UpdateMoneyText()
     {
-        currentCoinsTxt.text = GameManager.Instance.currentCoins.ToString() + " $";
+        _currentMoneyTxt.text = GameManager.Instance.currentMoney.ToString() + " $";
+    }
+
+    private void OnDisable()
+    {
+        PlayerController _player = FindObjectOfType<PlayerController>();
+        _player?.OnPlayerDeath.RemoveListener(HandlePlayerDeath);
     }
 }

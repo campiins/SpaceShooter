@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AbilityHolder : MonoBehaviour
 {
     public List<SpecialAbility> abilities = new List<SpecialAbility>();
+    
+    [SerializeField] private AbilitiesUI _abilitiesUI;
+
 
     private void Update()
     {
@@ -26,22 +30,10 @@ public class AbilityHolder : MonoBehaviour
             if (ability.cooldownTimer > 0)
             {
                 ability.cooldownTimer -= Time.deltaTime;
+
+                // Actualizar la interfaz de usuario (UI)
+                _abilitiesUI?.UpdateUI(ability);
             }
-        }
-    }
-
-    private void TryActivateAbility<T>() where T : SpecialAbility
-    {
-        SpecialAbility ability = abilities.Find(sa => sa.GetType() == typeof(T));
-
-        if (ability != null && ability.cooldownTimer <= 0)
-        {
-            ability.Activate(ability.currentLevel);
-            ability.cooldownTimer = ability.cooldownTime;
-        }
-        else
-        {
-            Debug.LogWarning($"Ability {typeof(T)} not found or on cooldown.");
         }
     }
 }

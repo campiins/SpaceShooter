@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class HPCollectible : MonoBehaviour
 {
@@ -13,16 +14,21 @@ public class HPCollectible : MonoBehaviour
     private bool _inverted = false;
 
     private PlayerController _player;
+    private ObjectPool<HPCollectible> _pool;
 
     private void Awake()
     {
         _player = FindObjectOfType<PlayerController>();
     }
 
-    private void Start()
+    public void Init(ObjectPool<HPCollectible> pool)
     {
+        _pool = pool;
+
         sineCenterY = transform.position.y;
         _inverted = (Random.value > 0.5f);
+
+        gameObject.SetActive(true);
     }
 
     private void FixedUpdate()
@@ -46,7 +52,7 @@ public class HPCollectible : MonoBehaviour
 
         if (position.x < -10f)
         {
-            Destroy(gameObject);
+            _pool.Release(this);
         }
     }
 
@@ -55,7 +61,7 @@ public class HPCollectible : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) 
         {
             _player.RestoreHealth(_healingAmount);
-            Destroy(this.gameObject);
+            _pool.Release(this);
         }
     }
 }

@@ -9,6 +9,7 @@ public class Shield : MonoBehaviour
     [SerializeField] private Color[] _hitColors = new Color[3];
 
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private PlayerController _player;
     
     private int _hits = 0;
 
@@ -23,7 +24,7 @@ public class Shield : MonoBehaviour
     {
         if (_hits >= _shieldAbility.GetHitsAbsorbed(_shieldAbility.currentLevel))
         {
-            this.gameObject.SetActive(false);
+            _player?.DeactivateShield();
         }
     }
 

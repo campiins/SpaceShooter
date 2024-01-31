@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
     [Header("Reward Popup")]
 
     [SerializeField] protected int scoreReward = 100;
-    [SerializeField] protected int coinReward = 10;
+    [SerializeField] protected int moneyReward = 10;
     [SerializeField] protected GameObject popupTextPrefab;
     [SerializeField] protected TMP_Text popupText;
 
@@ -109,12 +109,9 @@ public class Enemy : MonoBehaviour
 
     private void ShowPopup()
     {
-        popupText.text = coinReward.ToString() + " $";
+        popupText.text = moneyReward.ToString() + " $";
         popupTextPrefab.SetActive(false);
         Instantiate(popupTextPrefab, transform.position, Quaternion.identity).SetActive(true);
-        //GameManager.Instance.enemyKills++;
-        //GameManager.Instance.AddScore(scoreReward);
-        //GameManager.Instance.AddCoins(coinReward);
     }
 
     protected void SpawnProjectile(Vector3 movementDirection)
@@ -149,7 +146,7 @@ public class Enemy : MonoBehaviour
 
             GameManager.Instance.enemyKills++;
             GameManager.Instance.AddScore(scoreReward);
-            GameManager.Instance.AddCoins(coinReward);
+            GameManager.Instance.AddMoney(moneyReward);
 
             _enemyPool.Release(this);
         }

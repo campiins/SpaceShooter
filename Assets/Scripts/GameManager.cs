@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    
+
     private const int MAX_SCORE = 999999;
+    [HideInInspector] public bool isGameOver = false;
+    private bool isGamePaused = false;
 
     [HideInInspector] public int currentLevel = 0;
     [HideInInspector] public int currentScore = 0;
-    [HideInInspector] public int currentCoins = 0;
+    [HideInInspector] public int currentMoney = 0;
     [HideInInspector] public int enemyKills = 0;
 
     [Header("Enemy Spawner Settings")]
@@ -26,7 +30,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Shop shop;
 
-
     private void Awake()
     {
         if (Instance == null)
@@ -41,10 +44,25 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            AddCoins(1000);
+            if (!isGamePaused)
+            {
+                isGamePaused = true;
+                MenuManager.Instance.ShowPauseMenu();
+            }
+            else
+            {
+                isGamePaused = false;
+                MenuManager.Instance.HidePauseMenu();
+            }
         }
+    }
+
+    [ContextMenu("Add Money")]
+    private void AddThousandMoney()
+    {
+        AddMoney(1000);
     }
 
     public void AddScore(int score)
@@ -60,10 +78,10 @@ public class GameManager : MonoBehaviour
         MenuManager.Instance.UpdateScoreText();
     }
 
-    public void AddCoins(int coins)
+    public void AddMoney(int money)
     {
-        currentCoins += coins;
-        MenuManager.Instance.UpdateCoinsText();
-        shop.UpdateCoinsText();
+        currentMoney += money;
+        MenuManager.Instance.UpdateMoneyText();
+        shop.UpdateMoneyText();
     }
 }

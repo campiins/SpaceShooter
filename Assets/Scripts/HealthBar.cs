@@ -39,6 +39,8 @@ public class HealthBar : MonoBehaviour
         }
     }
 
+    // Add opacity if player or enemy is behind the healthbar
+    /*
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy"))
@@ -68,4 +70,5 @@ public class HealthBar : MonoBehaviour
             _fill.color = fillColor;
         }
     }
+    */
 }

@@ -18,7 +18,7 @@ public class Shop : MonoBehaviour
 
     [SerializeField] private TMP_Text multishotPriceText;
     [SerializeField] private TMP_Text shieldPriceText;
-    [SerializeField] private TMP_Text currentCoinsText;
+    [SerializeField] private TMP_Text currentMoneyText;
 
     [Header("Level Stars")]
 
@@ -28,21 +28,28 @@ public class Shop : MonoBehaviour
     [SerializeField] private Image shieldLevel2;
     [SerializeField] private Sprite goldStarSprite;
 
+    private AbilitiesUI _abilitiesUI;
+
+    private void Awake()
+    {
+        _abilitiesUI = FindObjectOfType<AbilitiesUI>();
+    }
+
     private void Start()
     {
         multishotPriceText.text = multishotAbility.priceLevel1.ToString() + " $";
         shieldPriceText.text = shieldAbility.priceLevel1.ToString() + " $";
-        currentCoinsText.text = $"You have <color=#FFE15C>{GameManager.Instance.currentCoins} $";
+        currentMoneyText.text = $"You have <color=#FFE15C>{GameManager.Instance.currentMoney} $";
 
-        // PROVISIONAL --------------------------------------------------------------
+        // Inicializar nivel de las habilidades
         multishotAbility.currentLevel = 0;
         shieldAbility.currentLevel = 0;
     }
 
-    public void UpdateCoinsText()
+    public void UpdateMoneyText()
     {
-        currentCoinsText.text = $"You have <color=#FFE15C>{GameManager.Instance.currentCoins} $";
-        MenuManager.Instance.UpdateCoinsText();
+        currentMoneyText.text = $"You have <color=#FFE15C>{GameManager.Instance.currentMoney} $";
+        MenuManager.Instance.UpdateMoneyText();
     }
 
     public void PurchaseMultiShot()
@@ -53,9 +60,9 @@ public class Shop : MonoBehaviour
         {
             int price = multishotAbility.GetPrice(currentLevel + 1);
 
-            if (GameManager.Instance.currentCoins >= price)
+            if (GameManager.Instance.currentMoney >= price)
             {
-                GameManager.Instance.currentCoins -= price;
+                GameManager.Instance.currentMoney -= price;
                 multishotAbility.currentLevel++;
 
                 if (multishotAbility.currentLevel == 1)
@@ -63,6 +70,7 @@ public class Shop : MonoBehaviour
                     FindObjectOfType<AbilityHolder>().abilities.Add(multishotAbility);
                     multishotLevel1.sprite = goldStarSprite;
                     multishotPriceText.text = multishotAbility.GetPrice(multishotAbility.currentLevel + 1).ToString();
+                    _abilitiesUI._multiShotImage.fillAmount = 0;
                 }
                 else if (multishotAbility.currentLevel == 2)
                 {
@@ -75,7 +83,7 @@ public class Shop : MonoBehaviour
             {
                 Debug.LogWarning("You don't have enough $.");
             }
-            UpdateCoinsText();
+            UpdateMoneyText();
         }
     }
 
@@ -87,9 +95,9 @@ public class Shop : MonoBehaviour
         {
             int price = shieldAbility.GetPrice(currentLevel + 1);
 
-            if (GameManager.Instance.currentCoins >= price)
+            if (GameManager.Instance.currentMoney >= price)
             {
-                GameManager.Instance.currentCoins -= price;
+                GameManager.Instance.currentMoney -= price;
                 shieldAbility.currentLevel++;
 
                 if (shieldAbility.currentLevel == 1)
@@ -97,6 +105,7 @@ public class Shop : MonoBehaviour
                     FindObjectOfType<AbilityHolder>().abilities.Add(shieldAbility);
                     shieldLevel1.sprite = goldStarSprite;
                     shieldPriceText.text = shieldAbility.GetPrice(shieldAbility.currentLevel + 1).ToString();
+                    _abilitiesUI._shieldImage.fillAmount = 0;
                 }
                 else if (shieldAbility.currentLevel == 2)
                 {
@@ -109,7 +118,7 @@ public class Shop : MonoBehaviour
             {
                 Debug.LogWarning("You don't have enough $.");
             }
-            UpdateCoinsText();
+            UpdateMoneyText();
         }
     }
 }

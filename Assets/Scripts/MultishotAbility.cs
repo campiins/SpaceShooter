@@ -21,11 +21,21 @@ public class MultishotAbility : SpecialAbility
 
     public void MultiShot(PlayerController player)
     {
-        int projectilesAmount = currentLevel * 10;
+        int projectilesAmount = 0;
+        if (currentLevel == 1)
+        {
+            projectilesAmount = numberOfProjectilesLevel1;
+        }
+        else if (currentLevel == 2)
+        {
+            projectilesAmount = numberOfProjectilesLevel2;
+        }
 
+        // Cantidad de grados que debe incrementarse en cada iteración para abarcar todo el rango desde el ángulo inicial hasta el final.
         float angleStep = (_endAngle - _startAngle) / projectilesAmount;
         float angle = _startAngle;
 
+        // Generar proyectiles
         for (int i = 0; i <= projectilesAmount; i++)
         {
             float projDirX = player.transform.position.x + Mathf.Sin((angle * Mathf.PI) / 180f);

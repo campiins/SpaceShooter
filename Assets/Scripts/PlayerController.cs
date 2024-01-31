@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
@@ -32,9 +33,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Boundaries _bounds;
 
+    [Header("Sound")]
+    [SerializeField] private PlayerSounds _sounds;
+
     private HealthBar _healthBar;
     private Rigidbody2D _rigidbody;
     private Animator _animator;
+    private AudioSource _audioSource;
 
     public UnityEvent OnPlayerDeath;
 
@@ -54,6 +59,7 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
+        _audioSource = GetComponent<AudioSource>();
         _healthBar = FindObjectOfType<HealthBar>();
 
         Health = maxHealth;
@@ -105,6 +111,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && _timer > _fireRate)
         {
+            _audioSource?.PlayOneShot(_sounds.fireProjectile);
             SpawnProjectile(transform.right);
             _timer = 0;
         }
@@ -112,7 +119,17 @@ public class PlayerController : MonoBehaviour
 
     public void ActivateShield()
     {
-        _shield.Init();
+        if (!_shield.gameObject.activeSelf) 
+        {
+            _audioSource?.PlayOneShot(_sounds.activateShield);
+            _shield.Init();
+        }
+    }
+
+    public void DeactivateShield()
+    {
+        _audioSource?.PlayOneShot(_sounds.deactivateShield);
+        _shield.gameObject.SetActive(false);
     }
 
     public void TakeDamage(int damage)
@@ -169,4 +186,12 @@ public class PlayerController : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+}
+
+[System.Serializable]
+public class PlayerSounds
+{
+    public AudioClip fireProjectile;
+    public AudioClip activateShield;
+    public AudioClip deactivateShield;
 }
