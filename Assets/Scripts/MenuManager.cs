@@ -6,10 +6,21 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] private GameObject gameOverObj;
-    [SerializeField] private GameObject shopObj;
+    [Header("InGame UI")]
+
     [SerializeField] private TMP_Text currentScoreTxt;
     [SerializeField] private TMP_Text currentCoinsTxt;
+
+    [Header("Shop")]
+
+    [SerializeField] private GameObject shopObj;
+
+    [Header("Game Over")]
+
+    [SerializeField] private GameObject gameOverObj;
+    [SerializeField] private TMP_Text finalScoreGOText;
+    [SerializeField] private TMP_Text levelGOText;
+    [SerializeField] private TMP_Text totalKillsGOText;
 
     private void Awake()
     {
@@ -25,11 +36,14 @@ public class MenuManager : MonoBehaviour
 
     private void HandlePlayerDeath()
     {
-        ShowGameOver();
+        Invoke("ShowGameOver", 2);
     }
 
     public void ShowGameOver()
     {
+        finalScoreGOText.text = GameManager.Instance.currentScore.ToString();
+        levelGOText.text = GameManager.Instance.currentLevel.ToString();
+        totalKillsGOText.text = GameManager.Instance.enemyKills.ToString();
         gameOverObj.SetActive(true);
     }
 

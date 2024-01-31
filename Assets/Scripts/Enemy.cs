@@ -112,8 +112,9 @@ public class Enemy : MonoBehaviour
         popupText.text = coinReward.ToString() + " $";
         popupTextPrefab.SetActive(false);
         Instantiate(popupTextPrefab, transform.position, Quaternion.identity).SetActive(true);
-        GameManager.Instance.AddScore(scoreReward);
-        GameManager.Instance.AddCoins(coinReward);
+        //GameManager.Instance.enemyKills++;
+        //GameManager.Instance.AddScore(scoreReward);
+        //GameManager.Instance.AddCoins(coinReward);
     }
 
     protected void SpawnProjectile(Vector3 movementDirection)
@@ -143,7 +144,13 @@ public class Enemy : MonoBehaviour
         if (this.gameObject.activeSelf)
         {
             _animator.SetBool("isMoving", false);
+
             ShowPopup();
+
+            GameManager.Instance.enemyKills++;
+            GameManager.Instance.AddScore(scoreReward);
+            GameManager.Instance.AddCoins(coinReward);
+
             _enemyPool.Release(this);
         }
     }

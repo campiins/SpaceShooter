@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int currentLevel = 0;
     [HideInInspector] public int currentScore = 0;
     [HideInInspector] public int currentCoins = 0;
+    [HideInInspector] public int enemyKills = 0;
 
     [Header("Enemy Spawner Settings")]
 
