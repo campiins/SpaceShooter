@@ -1,28 +1,70 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.Events;
 using UnityEngine.Pool;
 
-public class PlayerController : Spaceship
+public class PlayerController : MonoBehaviour
 {
+    [Header("General Settings")]
+
+    public int maxHealth;
+    [SerializeField] private float _speed;
+    
+    private int _health;
+    [NonSerialized] public bool _canBeDamaged = true;
+
+    [Header("Projectile Settings")]
+
+    [SerializeField] private Projectile _projectilePrefab;
+    [SerializeField] private GameObject _firePoints;
     [SerializeField] private float _fireRate;
+
+    private List<Transform> _firePointsList = new List<Transform>();
+    public ObjectPool<Projectile> _projectilePool;
     private float _timer;
+
+    [Header("Special Abilities")]
+
+    [SerializeField] private Shield _shield;
 
     [Header("Movement Boundaries")]
 
     [SerializeField] private Boundaries _bounds;
 
-    private HealthBar healthBar;
+    private HealthBar _healthBar;
+    private Rigidbody2D _rigidbody;
+    private Animator _animator;
+
     public UnityEvent OnPlayerDeath;
 
-    protected override void Awake()
+    public int Health
     {
-        base.Awake();
-        healthBar = FindObjectOfType<HealthBar>();
+        get { return _health; }
+        set { _health = value < 0 ? 0 : value; }
+    }
+
+    public bool CanBeDamaged
+    {
+        get { return _canBeDamaged; }
+        set { _canBeDamaged = value; }
+    }
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _animator = GetComponentInChildren<Animator>();
+        _healthBar = FindObjectOfType<HealthBar>();
+
+        Health = maxHealth;
         _timer = _fireRate;
+
+        _projectilePool = new ObjectPool<Projectile>(CreateProjectile, null, OnReturnedToPool, defaultCapacity: 20);
+        foreach (Transform childTransform in _firePoints.GetComponentsInChildren<Transform>())
+        {
+            if (childTransform != _firePoints.transform)
+                _firePointsList.Add(childTransform);
+        }
     }
 
     private void Update()
@@ -35,13 +77,13 @@ public class PlayerController : Spaceship
         Movement();
     }
 
-    protected override void Movement()
+    private void Movement()
     {
         // Inputs
         Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         // Mover nave
-        _rigidbody.velocity = input * Speed;
+        _rigidbody.velocity = input * _speed;
 
         // Delimitar movimiento
         ConstrainPlayerMovement();
@@ -57,9 +99,10 @@ public class PlayerController : Spaceship
         _rigidbody.position = new Vector2(xClamped, yClamped);
     }
 
-    protected override void Fire()
+    private void Fire()
     {
         _timer += Time.deltaTime;
+
         if (Input.GetKey(KeyCode.Space) && _timer > _fireRate)
         {
             SpawnProjectile(transform.right);
@@ -67,12 +110,17 @@ public class PlayerController : Spaceship
         }
     }
 
-    public override void TakeDamage(int damage)
+    public void ActivateShield()
+    {
+        _shield.Init();
+    }
+
+    public void TakeDamage(int damage)
     {
         if (CanBeDamaged)
         {
             Health -= damage;
-            if (healthBar != null) healthBar.UpdateHealthBar();
+            if (_healthBar != null) _healthBar.UpdateHealthBar();
             if (Health == 0)
             {
                 Destroy();
@@ -80,16 +128,35 @@ public class PlayerController : Spaceship
         }
     }
 
-    public override void Destroy()
+    private void SpawnProjectile(Vector3 movementDirection)
+    {
+        foreach (Transform firePointTransform in _firePointsList)
+        {
+            Vector3 spawnPosition = firePointTransform.position;
+            Projectile projectile = _projectilePool.Get();
+            projectile.transform.position = spawnPosition;
+            projectile.Init(movementDirection, _projectilePool);
+        }
+    }
+
+    public Projectile CreateProjectile()
+    {
+        Projectile projectile = Instantiate(_projectilePrefab);
+        return projectile;
+    }
+
+    private void OnReturnedToPool(Projectile projectile)
+    {
+        projectile.gameObject.SetActive(false);
+    }
+
+    public void Destroy()
     {
         OnPlayerDeath.Invoke();
-        base.Destroy();
-    }
-}
 
-[System.Serializable]
-public class Boundaries
-{
-    public Vector2 min; // minX = -8.4f; minY = -4.5f;
-    public Vector2 max; // maxX =  8.4f; maxY =  4.5f;
+        if (this.gameObject.activeSelf)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

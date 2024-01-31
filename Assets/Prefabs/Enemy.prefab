@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 6035034927156770275}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalPosition: {x: 10, y: -1.085203, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -79,13 +79,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e01d5368c2d984bb09a4ec17eb0d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Enemy
-  _maxHealth: 20
+  _name: Default Enemy
+  maxHealth: 10
   _speed: 5
-  _canBeDamaged: 1
   _projectilePrefab: {fileID: 2477898557445588283, guid: 8776137c9b6a7c44682f94b029fe95f6, type: 3}
   _firePoints: {fileID: 8872245303271499003}
   _fireRate: 1.5
+  scoreReward: 100
+  coinReward: 20
+  popupTextPrefab: {fileID: 6627471991438112843, guid: 5719d9412b60d1948814a52880b14cfc, type: 3}
+  popupText: {fileID: 2290249251290553403, guid: 5719d9412b60d1948814a52880b14cfc, type: 3}
+  _animator: {fileID: 8020848485756905045}
 --- !u!50 &1559327505507547178
 Rigidbody2D:
   serializedVersion: 4
@@ -146,7 +150,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.67, y: 1.5}
+  m_Size: {x: 1.1, y: 1}
   m_Direction: 1
 --- !u!1 &7649744282202695714
 GameObject:

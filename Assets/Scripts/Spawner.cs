@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -9,15 +10,8 @@ public class Spawner : MonoBehaviour
 {
     [Header("General Settings")]
 
-    [SerializeField] private Enemy _enemyPrefab;
-
-    [SerializeField] private int _numberOfEnemiesInWave = 10;
-    [SerializeField] private int _numberOfWavesInLevel = 3;
-    [SerializeField] private int _numberOfLevels = 5;
-
-    [SerializeField] private float _timeBetweenEnemies = 1f; // in seconds
-    [SerializeField] private float _timeBetweenWaves = 3f; // in seconds
-    [SerializeField] private float _timeBetweenLevels = 5f; // in seconds
+    [SerializeField] private List<Enemy> _enemyPrefabs = new List<Enemy>();
+    //[SerializeField] private Enemy _enemyPrefab;
 
     [NonSerialized] public Vector2 movementDirection;
 
@@ -50,28 +44,34 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-        for (int level = 1; level <= _numberOfLevels; level++)
+        for (int level = 1; level <= GameManager.Instance.numberOfLevels; level++)
         {
-            for (int wave = 1; wave <= _numberOfWavesInLevel; wave++)
+            if (level > 1)
             {
-                wavesText.text = $"Level {level} - Wave {wave}";
-                yield return new WaitForSeconds(2f);
+                FindObjectOfType<MenuManager>().ShowShop();
+            }
+
+            for (int wave = 1; wave <= GameManager.Instance.numberOfWavesInLevel; wave++)
+            {
+                GameManager.Instance.currentLevel = level;
+                wavesText.text = $"Level {GameManager.Instance.currentLevel} - Wave {wave}";
+                yield return new WaitForSeconds(3f);
                 wavesText.text = "";
 
-                for (int enemy = 1; enemy <= _numberOfEnemiesInWave; enemy++)
+                for (int enemy = 1; enemy <= GameManager.Instance.numberOfEnemiesInWave; enemy++)
                 {
                     SpawnEnemy(Vector2.left);
-                    yield return new WaitForSeconds(_timeBetweenEnemies);
+                    yield return new WaitForSeconds(GameManager.Instance.timeBetweenEnemies);
                 }
-                yield return new WaitForSeconds(_timeBetweenWaves);
+                yield return new WaitForSeconds(GameManager.Instance.timeBetweenWaves);
             }
-            yield return new WaitForSeconds(_timeBetweenLevels);
+            yield return new WaitForSeconds(GameManager.Instance.timeBetweenLevels);
         }
     }
 
     private void SpawnEnemy(Vector3 movementDirection)
     {
-        Vector3 spawnPosition = new Vector3(transform.position.x, Random.Range(_bounds.min.y, _bounds.max.y), transform.position.z);
+        Vector3 spawnPosition = new (transform.position.x, Random.Range(_bounds.min.y, _bounds.max.y), transform.position.z);
         Enemy enemy = _pool.Get();
         enemy.transform.position = spawnPosition;
         enemy.Init(movementDirection, _pool);
@@ -79,7 +79,8 @@ public class Spawner : MonoBehaviour
 
     private Enemy CreateEnemy()
     {
-        Enemy enemy = Instantiate(_enemyPrefab);
+        int i = Random.Range(0, _enemyPrefabs.Count);
+        Enemy enemy = Instantiate(_enemyPrefabs[i]);
         return enemy;
     }
 
