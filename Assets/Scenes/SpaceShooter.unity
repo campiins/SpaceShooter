@@ -2469,7 +2469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 0
   currentCoins: 0
-  numberOfEnemiesInWave: 1
+  numberOfEnemiesInWave: 10
   timeBetweenEnemies: 1.2
   numberOfWavesInLevel: 3
   timeBetweenWaves: 2

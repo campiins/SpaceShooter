@@ -11,6 +11,7 @@ public class Spawner : MonoBehaviour
     [Header("General Settings")]
 
     [SerializeField] private List<Enemy> _enemyPrefabs = new List<Enemy>();
+    //[SerializeField] private Enemy _enemyPrefab;
 
     [NonSerialized] public Vector2 movementDirection;
 
@@ -59,7 +60,7 @@ public class Spawner : MonoBehaviour
 
                 for (int enemy = 1; enemy <= GameManager.Instance.numberOfEnemiesInWave; enemy++)
                 {
-                    SpawnEnemy(Vector2.left.normalized);
+                    SpawnEnemy(Vector2.left);
                     yield return new WaitForSeconds(GameManager.Instance.timeBetweenEnemies);
                 }
                 yield return new WaitForSeconds(GameManager.Instance.timeBetweenWaves);
@@ -79,8 +80,7 @@ public class Spawner : MonoBehaviour
     private Enemy CreateEnemy()
     {
         int i = Random.Range(0, _enemyPrefabs.Count);
-        Enemy enemy = _enemyPrefabs[i];
-        Instantiate(enemy);
+        Enemy enemy = Instantiate(_enemyPrefabs[i]);
         return enemy;
     }
 

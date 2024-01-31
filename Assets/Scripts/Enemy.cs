@@ -30,8 +30,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected GameObject popupTextPrefab;
     [SerializeField] protected TMP_Text popupText;
 
-    private Vector2 _movementDirection;
-    public ObjectPool<Enemy> _enemyPool;
+    protected Vector2 _movementDirection;
+    private ObjectPool<Enemy> _enemyPool;
 
     private Rigidbody2D _rigidbody;
     [SerializeField] private Animator _animator;
@@ -63,9 +63,8 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(true);
         _timer = _fireRate;
         // Aplicar animación de movimiento
-        _animator.SetBool("isMoving", true);
+        
     }
-
 
     private void Update()
     {
@@ -82,7 +81,7 @@ public class Enemy : MonoBehaviour
         // Mover nave
         _rigidbody.velocity = _movementDirection * _speed;
 
-        if (transform.position.x < -10) // Si sale del límite izquierdo
+        if (transform.position.x < -8.5f) // Si sale del límite izquierdo
         {
             _enemyPool.Release(this);
         }
@@ -141,7 +140,6 @@ public class Enemy : MonoBehaviour
     {
         if (this.gameObject.activeSelf)
         {
-            _animator.SetBool("isMoving", false);
             ShowPopup();
             _enemyPool.Release(this);
         }
