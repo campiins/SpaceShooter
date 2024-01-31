@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Object References")]
 
-    [SerializeField] private MenuManager menuManager;
     [SerializeField] private Shop shop;
 
 
@@ -58,13 +57,13 @@ public class GameManager : MonoBehaviour
         {
             currentScore = MAX_SCORE;
         }
-        menuManager.UpdateScoreText();
+        MenuManager.Instance.UpdateScoreText();
     }
 
     public void AddCoins(int coins)
     {
         currentCoins += coins;
-        menuManager.UpdateCoinsText();
+        MenuManager.Instance.UpdateCoinsText();
         shop.UpdateCoinsText();
     }
 }

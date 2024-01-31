@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Fire();
+        if (transform.position.x > -8.5f) Fire();
     }
 
     private void FixedUpdate()
@@ -82,7 +82,7 @@ public class Enemy : MonoBehaviour
         // Mover nave
         _rigidbody.velocity = _movementDirection * _speed;
 
-        if (transform.position.x < -8.5f) // Si sale del límite izquierdo
+        if (transform.position.x < -9f) // Si sale del límite izquierdo
         {
             _enemyPool.Release(this);
         }

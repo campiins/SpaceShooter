@@ -32,7 +32,7 @@ public class Shop : MonoBehaviour
     {
         multishotPriceText.text = multishotAbility.priceLevel1.ToString() + " $";
         shieldPriceText.text = shieldAbility.priceLevel1.ToString() + " $";
-        currentCoinsText.text = $"You have {GameManager.Instance.currentCoins} $";
+        currentCoinsText.text = $"You have <color=#FFE15C>{GameManager.Instance.currentCoins} $";
 
         // PROVISIONAL --------------------------------------------------------------
         multishotAbility.currentLevel = 0;
@@ -41,7 +41,8 @@ public class Shop : MonoBehaviour
 
     public void UpdateCoinsText()
     {
-        currentCoinsText.text = $"You have {GameManager.Instance.currentCoins} $";
+        currentCoinsText.text = $"You have <color=#FFE15C>{GameManager.Instance.currentCoins} $";
+        MenuManager.Instance.UpdateCoinsText();
     }
 
     public void PurchaseMultiShot()

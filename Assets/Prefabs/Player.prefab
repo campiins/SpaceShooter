@@ -50,19 +50,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b42c7c9101501147bc699efd6a4df4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Player
-  maxHealth: 0
+  maxHealth: 100
   _speed: 10
-  _canBeDamaged: 1
   _projectilePrefab: {fileID: 2477898557445588283, guid: 92ad890a573307047b48559649a7ff07, type: 3}
   _firePoints: {fileID: 2475830628205080240}
   _fireRate: 0.5
-  _multiShotAbility: {fileID: 11400000, guid: 14a2e85b2f86f47409a7aa585c9ae3f9, type: 2}
-  _shieldAbility: {fileID: 11400000, guid: 8651afe6576dbbc4186ace0aa275ef11, type: 2}
-  _healthAbility: {fileID: 11400000, guid: 982734c4ff9b7824391c45de7f233444, type: 2}
-  _bounds:
-    min: {x: -8.4, y: -4.5}
-    max: {x: 8.4, y: 4.5}
+  _shield: {fileID: 5223877831623461818}
+  _bounds: {fileID: 11400000, guid: f42d88309a89c9d4dbcefa2379f80228, type: 2}
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -240,6 +234,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 745cabc8f52b9684abef329fdde37f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldAbility: {fileID: 11400000, guid: 8651afe6576dbbc4186ace0aa275ef11, type: 2}
+  _hitColors:
+  - {r: 1, g: 1, b: 1, a: 0.2}
+  - {r: 0, g: 1, b: 0.6666667, a: 0.2}
+  - {r: 0.46666667, g: 1, b: 0, a: 0.2}
+  _spriteRenderer: {fileID: 4210595253105075288}
 --- !u!212 &4210595253105075288
 SpriteRenderer:
   m_ObjectHideFlags: 0

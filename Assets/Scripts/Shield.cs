@@ -8,13 +8,9 @@ public class Shield : MonoBehaviour
 
     [SerializeField] private Color[] _hitColors = new Color[3];
 
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    
     private int _hits = 0;
-    private SpriteRenderer _spriteRenderer;
-
-    private void Awake()
-    {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
 
     public void Init()
     {
@@ -36,7 +32,10 @@ public class Shield : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyProjectile"))
         {
             _hits++;
-            _spriteRenderer.color = _hitColors[_hits];
+            if (_hits <= (_hitColors.Length - 1))
+            {
+                _spriteRenderer.color = _hitColors[_hits];
+            }
         }
     }
 }

@@ -128,6 +128,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void RestoreHealth(int health)
+    {
+        if (Health < maxHealth)
+        {
+            Health += health;
+            Mathf.Clamp(Health, 0, maxHealth);
+            _healthBar.UpdateHealthBar();
+        }
+    }
+
     private void SpawnProjectile(Vector3 movementDirection)
     {
         foreach (Transform firePointTransform in _firePointsList)

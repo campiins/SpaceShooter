@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+    public static MenuManager Instance;
+
     [Header("InGame UI")]
 
     [SerializeField] private TMP_Text currentScoreTxt;
@@ -24,6 +26,15 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         FindObjectOfType<PlayerController>().OnPlayerDeath.AddListener(HandlePlayerDeath);
     }
 

@@ -17,7 +17,6 @@ public class MultishotAbility : SpecialAbility
     public override void Activate(int level)
     {
         MultiShot(FindObjectOfType<PlayerController>());
-        Debug.Log("Multishot level " + level + " activated");
     }
 
     public void MultiShot(PlayerController player)

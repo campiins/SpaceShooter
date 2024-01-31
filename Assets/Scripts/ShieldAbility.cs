@@ -16,10 +16,7 @@ public class ShieldAbility : SpecialAbility
     public override void Activate(int level)
     {
         PlayerController player = FindObjectOfType<PlayerController>();
-
-        player.ActivateShield();
-
-        Debug.Log("Shield level " + level + " activated");
+        player?.ActivateShield();
     }
 
     public int GetHitsAbsorbed(int level)
