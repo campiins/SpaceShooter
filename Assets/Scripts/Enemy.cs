@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private Projectile _projectilePrefab;
     [SerializeField] private GameObject _firePoints;
-    [SerializeField] protected float _fireRate;
+    [SerializeField] protected float _fireRate = 1f;
 
     private List<Transform> _firePointsList = new List<Transform>();
     private ObjectPool<Projectile> _projectilePool;
@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Reward Popup")]
 
+    [SerializeField] protected int scoreReward = 100;
     [SerializeField] protected int coinReward = 10;
     [SerializeField] protected GameObject popupTextPrefab;
     [SerializeField] protected TMP_Text popupText;
@@ -61,9 +62,9 @@ public class Enemy : MonoBehaviour
         _movementDirection = direction;
         _enemyPool = pool;
         gameObject.SetActive(true);
-        _timer = _fireRate;
+        _timer = _fireRate - 0.33f;
         // Aplicar animación de movimiento
-        
+        _animator.SetBool("isMoving", true);
     }
 
     private void Update()
@@ -111,6 +112,7 @@ public class Enemy : MonoBehaviour
         popupText.text = coinReward.ToString() + " $";
         popupTextPrefab.SetActive(false);
         Instantiate(popupTextPrefab, transform.position, Quaternion.identity).SetActive(true);
+        GameManager.Instance.AddScore(scoreReward);
         GameManager.Instance.AddCoins(coinReward);
     }
 
@@ -140,6 +142,7 @@ public class Enemy : MonoBehaviour
     {
         if (this.gameObject.activeSelf)
         {
+            _animator.SetBool("isMoving", false);
             ShowPopup();
             _enemyPool.Release(this);
         }

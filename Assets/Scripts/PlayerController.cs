@@ -160,10 +160,3 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
-
-[System.Serializable]
-public class Boundaries
-{
-    public Vector2 min; // minX = -8.4f; minY = -4.5f;
-    public Vector2 max; // maxX =  8.4f; maxY =  4.5f;
-}

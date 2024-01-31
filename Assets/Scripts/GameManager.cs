@@ -5,8 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    
+    private const int MAX_SCORE = 999999;
 
     [HideInInspector] public int currentLevel = 0;
+    [HideInInspector] public int currentScore = 0;
     [HideInInspector] public int currentCoins = 0;
 
     [Header("Enemy Spawner Settings")]
@@ -42,6 +45,19 @@ public class GameManager : MonoBehaviour
         {
             AddCoins(1000);
         }
+    }
+
+    public void AddScore(int score)
+    {
+        if ((currentScore + score) < MAX_SCORE)
+        {
+            currentScore += score;
+        }
+        else
+        {
+            currentScore = MAX_SCORE;
+        }
+        menuManager.UpdateScoreText();
     }
 
     public void AddCoins(int coins)

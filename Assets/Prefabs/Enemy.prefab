@@ -85,6 +85,7 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 2477898557445588283, guid: 8776137c9b6a7c44682f94b029fe95f6, type: 3}
   _firePoints: {fileID: 8872245303271499003}
   _fireRate: 1.5
+  scoreReward: 100
   coinReward: 20
   popupTextPrefab: {fileID: 6627471991438112843, guid: 5719d9412b60d1948814a52880b14cfc, type: 3}
   popupText: {fileID: 2290249251290553403, guid: 5719d9412b60d1948814a52880b14cfc, type: 3}

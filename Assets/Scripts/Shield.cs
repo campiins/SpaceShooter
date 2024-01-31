@@ -6,17 +6,26 @@ public class Shield : MonoBehaviour
 {
     [SerializeField] private ShieldAbility _shieldAbility;
 
-    private int hits = 0;
+    [SerializeField] private Color[] _hitColors = new Color[3];
+
+    private int _hits = 0;
+    private SpriteRenderer _spriteRenderer;
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     public void Init()
     {
-        hits = 0;
+        _hits = 0;
+        _spriteRenderer.color = _hitColors[_hits];
         this.gameObject.SetActive(true);
     }
 
     private void Update()
     {
-        if (hits >= _shieldAbility.GetHitsAbsorbed(_shieldAbility.currentLevel))
+        if (_hits >= _shieldAbility.GetHitsAbsorbed(_shieldAbility.currentLevel))
         {
             this.gameObject.SetActive(false);
         }
@@ -26,7 +35,8 @@ public class Shield : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyProjectile"))
         {
-            hits++;
+            _hits++;
+            _spriteRenderer.color = _hitColors[_hits];
         }
     }
 }

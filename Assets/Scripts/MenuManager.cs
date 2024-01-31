@@ -8,11 +8,19 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverObj;
     [SerializeField] private GameObject shopObj;
+    [SerializeField] private TMP_Text currentScoreTxt;
     [SerializeField] private TMP_Text currentCoinsTxt;
 
     private void Awake()
     {
         FindObjectOfType<PlayerController>().OnPlayerDeath.AddListener(HandlePlayerDeath);
+    }
+
+    private void Start()
+    {
+        // Inicializar texto de puntuación y monedas
+        currentScoreTxt.text = "Score " + GameManager.Instance.currentScore.ToString();
+        currentCoinsTxt.text = GameManager.Instance.currentCoins.ToString() + " $";
     }
 
     private void HandlePlayerDeath()
@@ -40,6 +48,11 @@ public class MenuManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         shopObj.SetActive(false);
+    }
+
+    public void UpdateScoreText()
+    {
+        currentScoreTxt.text = "Score " + GameManager.Instance.currentScore.ToString();
     }
 
     public void UpdateCoinsText()
