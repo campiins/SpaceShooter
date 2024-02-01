@@ -5030,8 +5030,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1226200956
 MonoBehaviour:
@@ -6022,8 +6022,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1544696040
 MonoBehaviour:
@@ -6818,7 +6818,7 @@ GameObject:
   - component: {fileID: 1613176581}
   - component: {fileID: 1613176582}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: EnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -6851,11 +6851,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b708c48b7229e44c8b0fa09ddac5222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefabs:
-  - {fileID: 5358947796750238757, guid: e26d9469cfc70c247a23d553b4abac2b, type: 3}
-  - {fileID: 2507248306862201999, guid: fd09220596b9e6245882a1f99b9f0694, type: 3}
+  _enemyType:
+    enemyPrefab: {fileID: 5358947796750238757, guid: e26d9469cfc70c247a23d553b4abac2b, type: 3}
+    spawnProbability: 0.8
+    minSpawnLevel: 1
+  _enemyTargetPlayerType:
+    enemyPrefab: {fileID: 2507248306862201999, guid: fd09220596b9e6245882a1f99b9f0694, type: 3}
+    spawnProbability: 0.2
+    minSpawnLevel: 2
+  movementDirection: {x: 0, y: 0}
   _bounds: {fileID: 11400000, guid: 0d7da9ab24ff69a4d9230f5980d2eef8, type: 2}
   wavesText: {fileID: 209225599}
+  OnFinishLevels:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 889148039}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: ShowWinPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1629504700
 GameObject:
   m_ObjectHideFlags: 0
@@ -7071,8 +7092,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1656473906
 MonoBehaviour:

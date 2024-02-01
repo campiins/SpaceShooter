@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
@@ -11,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     public int maxHealth;
     [SerializeField] private float _speed;
+    [NonSerialized] public bool canMove = true;
     
     private int _health;
     [NonSerialized] public bool _canBeDamaged = true;
@@ -75,12 +75,14 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Fire();
+        if (canMove)
+            Fire();
     }
 
     private void FixedUpdate()
     {
-        Movement();
+        if (canMove)
+            Movement();
     }
 
     private void Movement()

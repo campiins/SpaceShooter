@@ -99,11 +99,11 @@ public class MenuManager : MonoBehaviour
         _levelWText.text = GameManager.Instance.currentLevel.ToString();
         _totalKillsWText.text = GameManager.Instance.enemyKills.ToString();
 
-        _gameOverObj.SetActive(true);
+        _winPanelObj.SetActive(true);
     }
     public void HideWinPanel()
     {
-        _gameOverObj.SetActive(false);
+        _winPanelObj.SetActive(false);
     }
 
     public void ShowShop()
