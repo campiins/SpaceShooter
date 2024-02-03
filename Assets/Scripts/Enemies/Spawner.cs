@@ -47,7 +47,7 @@ public class Spawner : MonoBehaviour
             if (level > 1)
             {
                 UpdateSpawnProbabilities();
-                Debug.Log($"Enemy1: {_enemyType.spawnProbability} Enemy2: {_enemyTargetPlayerType.spawnProbability}");
+                //Debug.Log($"Enemy1: {_enemyType.spawnProbability} Enemy2: {_enemyTargetPlayerType.spawnProbability}");
 
                 // Aumentar el número de enemigos en 2
                 GameManager.Instance.numberOfEnemiesInWave += 2;
@@ -116,9 +116,6 @@ public class Spawner : MonoBehaviour
 
     private Enemy CreateEnemy()
     {
-        //int i = Random.Range(0, _enemyPrefabs.Count);
-        //Enemy enemy = Instantiate(_enemyPrefabs[i]);
-        //return enemy;
         Enemy enemy = Instantiate(_enemyType.enemyPrefab);
         return enemy;
     }

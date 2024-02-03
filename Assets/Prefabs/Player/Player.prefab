@@ -404,6 +404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2988856790772021693}
   - component: {fileID: 1142071207916337369}
+  - component: {fileID: 8843283064824054172}
   - component: {fileID: 3861146747449242904}
   - component: {fileID: 1022659908483649710}
   m_Layer: 0
@@ -443,6 +444,26 @@ MonoBehaviour:
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8843283064824054172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9076241649788533209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb947e5c13dcc334b9ab5c756b638540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashTime: 0.25
+  flashSpeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!212 &3861146747449242904
 SpriteRenderer:
   m_ObjectHideFlags: 0

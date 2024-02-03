@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private HealthBar _healthBar;
     private Rigidbody2D _rigidbody;
     private Animator _animator;
+    private DamageFlash _damageFlash;
 
     public int Health
     {
@@ -55,8 +56,9 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _animator = GetComponentInChildren<Animator>();
         _healthBar = FindObjectOfType<HealthBar>();
+        _animator = GetComponentInChildren<Animator>();
+        _damageFlash = GetComponentInChildren<DamageFlash>();
 
         Health = maxHealth;
         _timer = _fireRate;
@@ -134,6 +136,7 @@ public class PlayerController : MonoBehaviour
     {
         if (CanBeDamaged)
         {
+            _damageFlash.CallDamageFlash();
             Health -= damage;
             if (_healthBar != null) _healthBar.UpdateHealthBar();
             if (Health == 0)

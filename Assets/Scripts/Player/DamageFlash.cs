@@ -6,29 +6,27 @@ public class DamageFlash : MonoBehaviour
 {
     [ColorUsage(true, true)]
 
-    [SerializeField] private Color flashColor = Color.white;
-    [SerializeField] private float flashTime = 0.25f;
-    [SerializeField] private AnimationCurve flashSpeedCurve;
+    [SerializeField] private Color _flashColor = Color.white;
+    [SerializeField] private float _flashTime = 0.25f;
+    [SerializeField] private AnimationCurve _flashSpeedCurve;
 
-    private SpriteRenderer[] spriteRenderers;
-    private Material[] materials;
-
-    private Coroutine damageFlashCoroutine;
+    private SpriteRenderer[] _spriteRenderers;
+    private Material[] _materials;
 
     private void Awake()
     {
-        spriteRenderers = GetComponents<SpriteRenderer>();
+        _spriteRenderers = GetComponents<SpriteRenderer>();
 
         Init();
     }
 
     private void Init()
     {
-        materials = new Material[spriteRenderers.Length];
+        _materials = new Material[_spriteRenderers.Length];
         // Asignar los materiales de spriteRenderers a materials
-        for (int i = 0; i < spriteRenderers.Length; i++)
+        for (int i = 0; i < _spriteRenderers.Length; i++)
         {
-            materials[i] = spriteRenderers[i].material;
+            _materials[i] = _spriteRenderers[i].material;
         }
     }
 
@@ -36,7 +34,7 @@ public class DamageFlash : MonoBehaviour
     {
         if (this.gameObject.activeSelf)
         {
-            damageFlashCoroutine = StartCoroutine(DamageFlasher());
+            StartCoroutine(DamageFlasher());
         }
     }
 
@@ -44,16 +42,14 @@ public class DamageFlash : MonoBehaviour
     {
         // Asignar color
         SetFlashColor();
-        // Interpolar la cantidad de flash
-        float currentFlashAmount = 0f;
         float elapsedTime = 0f;
 
-        while (elapsedTime < flashTime)
+        while (elapsedTime < _flashTime)
         {
             // Iterar elapsedTime
             elapsedTime += Time.deltaTime;
             // Interpolar la cantidad de flash
-            currentFlashAmount = Mathf.Lerp(1f, flashSpeedCurve.Evaluate(elapsedTime), elapsedTime / flashTime);
+            float currentFlashAmount = Mathf.Lerp(1f, _flashSpeedCurve.Evaluate(elapsedTime), elapsedTime / _flashTime);
             SetFlashAmount(currentFlashAmount);
 
             yield return null;
@@ -62,18 +58,18 @@ public class DamageFlash : MonoBehaviour
 
     private void SetFlashColor()
     {
-        for (int i = 0; i < materials.Length; i++)
+        for (int i = 0; i < _materials.Length; i++)
         {
-            materials[i].SetColor("_FlashColor", flashColor);
+            _materials[i].SetColor("_FlashColor", _flashColor);
         }
     }
 
     private void SetFlashAmount(float amount)
     {
         // Asignar cantidad de flash
-        for(int i = 0;i < materials.Length; i++)
+        for(int i = 0;i < _materials.Length; i++)
         {
-            materials[i].SetFloat("_FlashAmount", amount);
+            _materials[i].SetFloat("_FlashAmount", amount);
         }
     }
 }
