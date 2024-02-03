@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public int maxHealth;
     private int _health;
     [SerializeField] protected float _speed;
+    private bool _isDead = false;
 
     [Header("Projectile Settings")]
 
@@ -62,6 +63,7 @@ public class Enemy : MonoBehaviour
     }
     public void Init(Vector2 direction, ObjectPool<Enemy> pool)
     {
+        _isDead = false;
         Health = maxHealth;
         _movementDirection = direction;
         enemyPool = pool;
@@ -145,8 +147,12 @@ public class Enemy : MonoBehaviour
 
     private void CallDestroyAnimation()
     {
-        AudioManager.Instance.PlayAudioClip(_sounds.deathExplosion);
-        _animator.SetBool("isDead", true);
+        _isDead = true;
+        if (_isDead) // Esta comprobación se hace para evitar que el sonido y la animación se reproduzcan más de una vez si varios proyectiles impactan a la vez
+        {
+            AudioManager.Instance.PlayAudioClip(_sounds.deathExplosion);
+            _animator.SetBool("isDead", true);
+        } 
     }
 
     public void Destroy()
@@ -169,7 +175,7 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerController player = other.GetComponent<PlayerController>();
-            if (player.CanBeDamaged)
+            if (player.CanBeDamaged && !this._isDead)
             {
                 player.Destroy();
             }

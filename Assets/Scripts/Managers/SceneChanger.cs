@@ -29,7 +29,6 @@ public class SceneChanger : MonoBehaviour
     {
         _levelToLoad = buildIndex;
         _anim.SetBool("FadeOut", true);
-        Debug.Log("FadeOut animation triggered.");
     }
 
     public void OpenNextScene()
@@ -39,7 +38,6 @@ public class SceneChanger : MonoBehaviour
 
     public void OpenMainMenu()
     {
-        Debug.Log("Fading to menu...");
         FadeToScene(0);
     }
 

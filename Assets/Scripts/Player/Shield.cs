@@ -32,6 +32,7 @@ public class Shield : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyProjectile"))
         {
+            AudioManager.Instance.PlayAudioClip(_player.sounds.shieldImpact);
             _hits++;
             if (_hits <= (_hitColors.Length - 1))
             {

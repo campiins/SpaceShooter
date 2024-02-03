@@ -47,9 +47,10 @@ public class AudioManager : MonoBehaviour
 public class PlayerSounds
 {
     public AudioClip fireProjectile;
+    public AudioClip deathExplosion;
     public AudioClip activateShield;
     public AudioClip deactivateShield;
-    public AudioClip deathExplosion;
+    public AudioClip shieldImpact;
 }
 
 [System.Serializable]

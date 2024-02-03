@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Sound")]
 
-    [SerializeField] private PlayerSounds _sounds;
+    public PlayerSounds sounds;
 
     private HealthBar _healthBar;
     private Rigidbody2D _rigidbody;
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && _timer > _fireRate)
         {
-            AudioManager.Instance.PlayAudioClip(_sounds.fireProjectile);
+            AudioManager.Instance.PlayAudioClip(sounds.fireProjectile);
             SpawnProjectile(transform.right);
             _timer = 0;
         }
@@ -119,14 +119,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!_shield.gameObject.activeSelf) 
         {
-            AudioManager.Instance.PlayAudioClip(_sounds.activateShield);
+            AudioManager.Instance.PlayAudioClip(sounds.activateShield);
             _shield.Init();
         }
     }
 
     public void DeactivateShield()
     {
-        AudioManager.Instance.PlayAudioClip(_sounds.deactivateShield);
+        AudioManager.Instance.PlayAudioClip(sounds.deactivateShield);
         _shield.gameObject.SetActive(false);
     }
 
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
     public void Destroy()
     {
-        AudioManager.Instance.PlayAudioClip(_sounds.deathExplosion);
+        AudioManager.Instance.PlayAudioClip(sounds.deathExplosion);
         _animator.SetBool("isDead", true);
     }
 }

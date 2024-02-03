@@ -16,7 +16,9 @@ public class MultishotAbility : SpecialAbility
 
     public override void Activate(int level)
     {
-        MultiShot(FindObjectOfType<PlayerController>());
+        PlayerController _player = FindObjectOfType<PlayerController>();
+        AudioManager.Instance.PlayAudioClip(_player.sounds.fireProjectile);
+        MultiShot(_player);
     }
 
     public void MultiShot(PlayerController player)

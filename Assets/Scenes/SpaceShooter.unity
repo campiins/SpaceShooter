@@ -11559,10 +11559,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5223877831623461818, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-      propertyPath: _player
-      value: 
-      objectReference: {fileID: 3291984609657692604}
     - target: {fileID: 6285891152047297897, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7
@@ -11603,48 +11599,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6900975476512118507, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6913072052462930125, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
       propertyPath: _abilitiesUI
       value: 
       objectReference: {fileID: 2102896174}
-    - target: {fileID: 6913072052462930125, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-      propertyPath: _shieldImage
-      value: 
-      objectReference: {fileID: 552627618}
-    - target: {fileID: 6913072052462930125, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-      propertyPath: _multiShotImage
-      value: 
-      objectReference: {fileID: 1062290446}
-    - target: {fileID: 7159496995918533088, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7622508787980828038, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-      propertyPath: _sounds.fireSound
-      value: 
-      objectReference: {fileID: 8300000, guid: f833acaa8ac58244c9a77c8399ff81ec, type: 3}
-    - target: {fileID: 7622508787980828038, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-      propertyPath: _sounds.activateShield
-      value: 
-      objectReference: {fileID: 8300000, guid: ef8a069554c4af044a1f231ad07d35cd, type: 3}
-    - target: {fileID: 7622508787980828038, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-      propertyPath: _sounds.deathExplosion
-      value: 
-      objectReference: {fileID: 8300000, guid: 3bf399aaa1cca6b43a00f357c478a01c, type: 3}
-    - target: {fileID: 7622508787980828038, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-      propertyPath: _sounds.fireProjectile
-      value: 
-      objectReference: {fileID: 8300000, guid: 8bbfdbf17b8f4ef41b45560719bc4ab5, type: 3}
-    - target: {fileID: 7622508787980828038, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-      propertyPath: _sounds.deactivateShield
-      value: 
-      objectReference: {fileID: 8300000, guid: 554fc421e03841e4ab90d994a17647be, type: 3}
-    m_RemovedComponents:
-    - {fileID: 3430600408349214581, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -11654,17 +11613,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6285891152047297897, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
   m_PrefabInstance: {fileID: 3291984609657692597}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3291984609657692604 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7622508787980828038, guid: a914d6e8b3aa58441900dce2e8c06377, type: 3}
-  m_PrefabInstance: {fileID: 3291984609657692597}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b42c7c9101501147bc699efd6a4df4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3349439212309647834
 GameObject:
   m_ObjectHideFlags: 0
