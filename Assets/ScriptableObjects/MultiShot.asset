@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: MultiShot
   m_EditorClassIdentifier: 
   abilityName: Multi-Shot
-  cooldownTime: 3
+  cooldownTime: 10
   currentLevel: 0
   priceLevel1: 500
   priceLevel2: 800
-  numberOfProjectilesLevel1: 10
+  numberOfProjectilesLevel1: 15
   numberOfProjectilesLevel2: 20
   key: 113

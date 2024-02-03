@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: 
   abilityName: Shield
-  cooldownTime: 3
-  currentLevel: 0
+  cooldownTime: 15
+  currentLevel: 1
   priceLevel1: 700
   priceLevel2: 1000
   numberOfHitsAbsorbedLevel1: 2
